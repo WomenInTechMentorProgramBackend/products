@@ -1,0 +1,300 @@
+---
+openapi: 3.0.3
+info:
+  description: This is a sample product service.
+  version: "1.0"
+  title: Swagger products
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: wit2022.v1@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8091/products
+tags:
+  - name: product
+    description: this service stores short information about the product
+paths:
+  /products:
+    get:
+      tags:
+        - product
+      summary: Get all products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    post:
+      tags:
+        - product
+      summary: Add a new product to the service
+      description: ""
+      operationId: addProduct
+      requestBody:
+        description: Save product in the service
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Object already exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /products/{productId}:
+    get:
+      tags:
+        - product
+      summary: Get product by productId
+      description: ""
+      operationId: getProductByProductId
+      parameters:
+        - name: productId
+          in: path
+          description: Id that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '405':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    put:
+      tags:
+        - product
+      summary: Update existing product
+      description: ""
+      operationId: updateProduct
+      requestBody:
+        description: Update product in the service
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+        required: true
+      parameters:
+        - name: productId
+          in: path
+          description: Id that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Object already exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - product
+      summary: Delete product by id
+      description: ""
+      operationId: deleteProductById
+      parameters:
+        - name: productId
+          in: path
+          description: Id that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad Request
+        '404':
+          description: Product not found
+        '405':
+          description: Validation exception
+  /products/{productCode}:
+    get:
+      tags:
+        - product
+      summary: Get product by productCode
+      description: ""
+      operationId: getProductByProductCode
+      parameters:
+        - name: productCode
+          in: path
+          description: Id that need to be considered for filter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '405':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        productCode:
+          type: string
+          minLength: 1
+          maxLength: 30
+          example: "p1234"
+        name:
+          type: string
+          minLength: 1
+          maxLength: 30
+          example: "shirt"
+        description:
+          type: string
+          minLength: 0
+          maxLength: 255
+          example: "something about this product"
+        price:
+          type: string
+          example: "2.29"
+        count:
+          type: string
+          example: "2"
+        imageLink:
+          type: string
+          maxLength: 255
+          example: "link"
+        createdAt:
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: "date-time"
+        updatedAt:
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: "date-time"
+        createdBy:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: "u550e8400-e29b-41d4-a716-446655440000"
+        updatedBy:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: "u550e8400-e29b-41d4-a716-446655440000"
+        isActive:
+          type: boolean
+      required:
+        - name
+        - isActive
+    ErrorMessage:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        httpStatus:
+          type: string
+        timestamp:
+          type: string
+          format: "date-time"
+        message:
+          type: string
+        description:
+          type: string
+    ProductsModel:
+      type: object
+      properties:
+        products:
+          type: array
+          description: "Products"
+          items:
+            $ref: "#/components/schemas/ProductDto"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
