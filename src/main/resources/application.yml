@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://box-school.cb86qcs2it4j.eu-west-3.rds.amazonaws.com:5432/box_school_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+      database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+      open-in-view: false
+
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+    enabled: true
