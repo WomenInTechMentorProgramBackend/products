@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/products_db
+    url: jdbc:postgresql://box-school.cb86qcs2it4j.eu-west-3.rds.amazonaws.com:5432/box_school_db
     username: postgres
-    password: 123
+    password: postgres
 
   jpa:
     hibernate:
